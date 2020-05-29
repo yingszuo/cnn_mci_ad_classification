@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from os import chdir, listdir, remove, walk
 from sklearn.model_selection import train_test_split
 
-chdir('C:/Users/Yings/OneDrive/Desktop/Coursework/Master/Thesis_2020/Thesis/code') 
+chdir('D:/ADNI_unzipped/Thesis_2020/Thesis/code') 
 #print(getcwd())
 
 # import all the defined functions
@@ -65,7 +65,8 @@ filtered = "D:/ADNI_unzipped/filtered"
 filter_img(rawimages, filtered) 
 #print(len(listdir(filtered)))
 
-################################################  Data Preprocessing of original data  #####################################
+##############################################  Data Preprocessing of original data  ####################################
+
 #%%
 """Proprocessing of original images. 
 Go through the images in filtered, and perform 
