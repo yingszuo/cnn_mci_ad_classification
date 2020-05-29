@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 import nibabel as nib 
 import matplotlib.pyplot as plt
-from os import chdir, listdir, remove, walk
+from os import getcwd, chdir, listdir, remove, walk
 from sklearn.model_selection import train_test_split
 
 chdir('D:/ADNI_unzipped/Thesis_2020/Thesis/code') 
@@ -65,8 +65,7 @@ filtered = "D:/ADNI_unzipped/filtered"
 filter_img(rawimages, filtered) 
 #print(len(listdir(filtered)))
 
-##############################################  Data Preprocessing of original data  ####################################
-
+################################################  Data Preprocessing of original data  #####################################
 #%%
 """Proprocessing of original images. 
 Go through the images in filtered, and perform 
