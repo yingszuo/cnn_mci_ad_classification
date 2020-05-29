@@ -65,7 +65,7 @@ filtered = "D:/ADNI_unzipped/filtered"
 filter_img(rawimages, filtered) 
 #print(len(listdir(filtered)))
 
-################################################  Data Preprocessing of original data  #############################################
+################################################  Data Preprocessing of original data  #####################################
 #%%
 """Proprocessing of original images. 
 Go through the images in filtered, and perform 
@@ -228,8 +228,7 @@ np.save(input_path2 + "test_label", np.asarray(test_y_rs))
 
 
 
-############################################### Data Preprocessing of augmented data  #################################### 
-#%% 
+############################################### Data Preprocessing of augmented data  ############################
 """use the defined preprocessing_aug to loop through filtered data to create new training data. 
 To create balanced class labels, AD images went through data augmentaion 4 times, 
 MCI images went through data augmentaion once, 
@@ -311,8 +310,8 @@ for root, dirs, files in walk(filtered):
 """save training data & save copies of the validation & test data"""
 
 # create empty lists for storing validation and test data
-M_train = []
-lab_train = []
+M_train_aug = []
+lab_train_aug = []
 
 # set counter to 0
 counter = 0        
@@ -332,8 +331,8 @@ for root, dirs, files in walk(aug_train):
             new_lab = 2            
         
         # save training data
-        M_train.append(img)
-        lab_train.append(new_lab)
+        M_train_aug.append(img)
+        lab_train_aug.append(new_lab)
         
         # monitor the process       
         counter += 1
@@ -342,8 +341,8 @@ for root, dirs, files in walk(aug_train):
 
 # define a path to store the augmented training input
 input_path3 = "D:/ADNI_unzipped/input/aug/"
-np.save(input_path3 + "train_data", np.asarray(M_train))
-np.save(input_path3 + "train_label", np.asarray(lab_train))
+np.save(input_path3 + "train_data", np.asarray(M_train_aug))
+np.save(input_path3 + "train_label", np.asarray(lab_train_aug))
 # save copies of the validation and test data that was processed normally 
 np.save(input_path3 + "val_data", np.asarray(M_val))
 np.save(input_path3 + "val_label", np.asarray(lab_val))
@@ -357,8 +356,7 @@ np.save(input_path3 + "test_label", np.asarray(lab_test))
 
 
 
-###############################################  Supplementary code #######################################################
-#%%
+###############################################  Supplementary code ###########################################
 # selected a random image to check the outcome of each preprocessing_org steps
 icheck = np.load(filtered + "/" + listdir(filtered)[16])
 # check skull-stripping
