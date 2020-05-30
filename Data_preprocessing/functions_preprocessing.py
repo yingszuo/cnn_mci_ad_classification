@@ -1,7 +1,7 @@
 # Author: Ying Zuo 
 
 """
-functions fr image preprocessing
+functions for image preprocessing
 """
 
 #%%
