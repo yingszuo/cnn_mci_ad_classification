@@ -17,7 +17,9 @@ from functions_model.py import *
 
 
 #%%
-"""# Load in the augmented training data"""
+
+
+"""  Load in the augmented training data """
 
 Xtr = np.load("inputs/aug_data/train_data.npy", allow_pickle = True)
 ytr = np.load("inputs/aug_data/train_label.npy", allow_pickle = True)
@@ -44,6 +46,7 @@ print("Test")
 showpercentage(np.unique(yts, return_counts=True))
 
 #%%
+
 
 """  NC vs. AD - data augmentation """
 
@@ -93,11 +96,12 @@ print(y_train_ms.shape)
 
 model, _  = run_base(X_train_ms, y_train_ms, final = True)
 
-# evaluate with the test set 
-# (acc, auc, precision, recall, specificity and f1)
+
+# evaluate with the test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'da_roc_ncad')
 
 #%%
+
 
 """  NC vs. MCI - data augmentation """
 
@@ -146,8 +150,8 @@ print(y_train_ms.shape)
 
 model, _  = run_base(X_train_ms, y_train_ms, dr = 0.04, final = True)
 
-# evaluate with the test set 
-# (acc, auc, precision, recall, specificity and f1)
+
+# evaluate with the test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'da_roc_ncmci')
 
 #%%
@@ -175,6 +179,7 @@ y_val = onehot_bi(yval_admci)
 model, hist = run_base(X_train, y_train, X_val, y_val, 
                        dr = 0.05, breg = l2(0.001), areg = l1(0.0001))
 
+
 # visualization
 history_dict = hist.history
 #print(history_dict.keys())
@@ -192,6 +197,7 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'da_mciad_acc')
 
+
 # model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
@@ -202,10 +208,8 @@ model, _  = run_base(X_train_ms, y_train_ms,
                      dr = 0.05, breg = l2(0.001), areg = l1(0.0001), 
                      final = True)
 
-"""# Model testing - MCI vs. AD"""
 
-# evaluate with the test set 
-# (acc, auc, precision, recall, specificity and f1)
+# evaluate with the test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'da_roc_mciad')
 
 #%% 
@@ -228,6 +232,7 @@ y_val = onehot_tri(yval)
 model, hist = run_base(X_train, y_train, X_val, y_val, 
                        breg = l2(0.001), out = 3)
 
+
 # visualization
 history_dict = hist.history
 #print(history_dict.keys())
@@ -245,6 +250,7 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'da_ncmciad_acc')
 
+
 # model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
@@ -255,6 +261,10 @@ model, _  = run_base(X_train_ms, y_train_ms,
                      breg = l2(0.001), out = 3, final = True)
 
 
-# evaluate with the test set 
-# (acc, auc, precision, recall, specificity and f1)
+
+# evaluate with the test set (acc, precision, recall, specificity and f1)
 evaluate_3way(X_test, y_test, model)
+
+
+
+

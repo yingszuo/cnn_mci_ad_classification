@@ -32,9 +32,8 @@ from functions_model.py import *
 from unet3d import *
 
 
-#%% define the adapted genesis model (set %tensorflow_version 1.x for training Genesis)
-
-# build the Genesis model
+#%% 
+# build the Genesis model(set %tensorflow_version 1.x for training Genesis)
 def run_genesis(X_train, y_train, X_valid = None, y_valid = None, 
              final = False, out = 2,
              dr = 0.02, n_epochs = 30, batch_size = 15):
@@ -85,7 +84,9 @@ def run_genesis(X_train, y_train, X_valid = None, y_valid = None,
   return model, hist
 
 #%%
-"""# Load in the input - original data"""
+  
+
+"""  Load in the input - original data"""
 
 Xtr = np.load("inputs/allyr_64/train_data.npy", allow_pickle = True)
 ytr = np.load("inputs/allyr_64/train_label.npy", allow_pickle = True)
@@ -112,9 +113,9 @@ print("Test")
 showpercentage(np.unique(yts, return_counts=True))
 
 #%%
-#  NC vs. AD - transfer learning
 
-"""# Preparing data & labels for NC vs. AD"""
+
+"""  NC vs. AD - transfer learning """
 
 # create input for binary classification of NC vs. AD
 Xtr_ncad, ytr_ncad = data_filter(Xtr, ytr, 1)
@@ -131,12 +132,12 @@ y_train = onehot_bi(ytr_ncad)
 y_test = onehot_bi(yts_ncad)
 y_val = onehot_bi(yval_ncad)
 
-"""# Model training - NC vs. AD"""
 
+# model training
 model, hist = run_genesis(X_train, y_train, X_val, y_val)
 
-"""# Visualization of model training"""
 
+# visualization
 history_dict = hist.history
 #print(history_dict.keys())
 acc = history_dict['accuracy']
@@ -144,7 +145,6 @@ val_acc = history_dict['val_accuracy']
 loss = history_dict['loss']
 val_loss = history_dict['val_loss']
 
-# plotting training and validation loss and accuracy
 plot_history(data_list=[loss, val_loss],
              label_list=['Training loss', 'Validation loss'],
              title='Training and validation loss',
@@ -154,8 +154,8 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'tf_ncad_acc')
 
-"""# Model final training - NC vs. AD"""
 
+# model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
 y_train_ms = np.concatenate((y_train, y_val), axis = 0)
@@ -163,16 +163,14 @@ print(y_train_ms.shape)
 
 model, _  = run_genesis(X_train_ms, y_train_ms, final = True)
 
-"""# Model testing - NC vs. AD"""
 
 # evaluate with test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'tf_roc_ncad')
 
 #%%
 
-#  NC vs. MCI - transfer learning
 
-"""# Preparing data & labels for NC vs. MCI"""
+"""  NC vs. MCI - transfer learning """
 
 # create input for binary classification of NC vs. MCI
 Xtr_ncmci, ytr_ncmci = data_filter(Xtr, ytr, 2)
@@ -190,12 +188,11 @@ y_test = onehot_bi(yts_ncmci)
 y_val = onehot_bi(yval_ncmci)
 
 
-"""# Model training - NC vs. MCI"""
-
+# model training
 model, hist = run_genesis(X_train, y_train, X_val, y_val)
 
-"""# Visualization of model training - NC vs. MCI"""
 
+# visualization
 history_dict = hist.history
 #print(history_dict.keys())
 acc = history_dict['accuracy']
@@ -203,7 +200,6 @@ val_acc = history_dict['val_accuracy']
 loss = history_dict['loss']
 val_loss = history_dict['val_loss']
 
-# plotting training and validation loss and accuracy
 plot_history(data_list=[loss, val_loss],
              label_list=['Training loss', 'Validation loss'],
              title='Training and validation loss',
@@ -213,8 +209,8 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'tf_ncmci_acc')
 
-"""# Model final training - NC vs. MCI"""
 
+# model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
 y_train_ms = np.concatenate((y_train, y_val), axis = 0)
@@ -222,16 +218,14 @@ print(y_train_ms.shape)
 
 model, _  = run_genesis(X_train_ms, y_train_ms, final = True)
 
-"""# Model testing - NC vs. MCI"""
 
 # evaluate with test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'tf_roc_ncmci')
 
 #%%
 
-# MCI vs. AD - transfer learning
 
-"""# Preparing data & labels for MCI vs. AD"""
+"""  MCI vs. AD - transfer learning """
 
 # create input for binary classification of MCI vs. AD
 Xtr_admci, ytr_admci = data_filter(Xtr, ytr, 0)
@@ -249,12 +243,10 @@ y_train = onehot_bi(ytr_admci)
 y_test = onehot_bi(yts_admci)
 y_val = onehot_bi(yval_admci)
 
-"""# Model training - MCI vs. AD"""
-
+# model training
 model, hist = run_genesis(X_train, y_train, X_val, y_val)
 
-"""# Visualization of model training - MCI vs. AD"""
-
+# visualization
 history_dict = hist.history
 #print(history_dict.keys())
 acc = history_dict['accuracy']
@@ -262,7 +254,6 @@ val_acc = history_dict['val_accuracy']
 loss = history_dict['loss']
 val_loss = history_dict['val_loss']
 
-# plotting training and validation loss and accuracy
 plot_history(data_list=[loss, val_loss],
              label_list=['Training loss', 'Validation loss'],
              title='Training and validation loss',
@@ -272,8 +263,8 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'tf_mciad_acc')
 
-"""# Model final training - MCI vs. AD"""
 
+# model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
 y_train_ms = np.concatenate((y_train, y_val), axis = 0)
@@ -281,16 +272,14 @@ print(y_train_ms.shape)
 
 model, _  = run_genesis(X_train_ms, y_train_ms, final = True)
 
-"""# Model testing - MCI vs. AD"""
 
 # evaluate with test set (acc, auc, precision, recall, specificity and f1)
 evaluate_binary(X_test, y_test, model, name = 'tf_roc_mciad')
 
 #%% 
 
-# NC vs. MCI vs. AD - transfer learning
 
-"""# Preparing data & labels for NC vs. MCI vs. AD"""
+"""  NC vs. MCI vs. AD - transfer learning """
 
 # reshape the input for 3-way classification of NC vs. MCI vs. AD
 X_train = np.transpose(Xtr.reshape(-1,64,64,64,1), (0, 4, 1, 2, 3)) 
@@ -303,12 +292,10 @@ y_test = onehot_tri(yts)
 y_val = onehot_tri(yval)
 
 
-"""# Model training - NC vs. MCI vs. AD"""
-
+# model training
 model, hist = run_genesis(X_train, y_train, X_val, y_val, out = 3)
 
-"""# Visualization of model training - NC vs. MCI vs. AD"""
-
+# visualization
 history_dict = hist.history
 #print(history_dict.keys())
 acc = history_dict['accuracy']
@@ -316,7 +303,6 @@ val_acc = history_dict['val_accuracy']
 loss = history_dict['loss']
 val_loss = history_dict['val_loss']
 
-# plotting training and validation loss and accuracy
 plot_history(data_list=[loss, val_loss],
              label_list=['Training loss', 'Validation loss'],
              title='Training and validation loss',
@@ -326,8 +312,8 @@ plot_history(data_list=[acc, val_acc],
              title ='Training and validation accuracy',
              ylabel ='Accuracy', name = 'tf_ncmciad_acc')
 
-"""# Model final training - NC vs. MCI vs. AD"""
 
+# model final training
 X_train_ms = np.concatenate((X_train, X_val), axis = 0)
 print(X_train_ms.shape)
 y_train_ms = np.concatenate((y_train, y_val), axis = 0)
@@ -335,7 +321,9 @@ print(y_train_ms.shape)
 
 model, _  = run_genesis(X_train_ms, y_train_ms, out = 3, final = True)
 
-"""# Model testing - NC vs. MCI vs. AD"""
 
 # evaluate with test set (acc, auc, precision, recall, specificity and f1)
 evaluate_3way(X_test, y_test, model)
+
+
+
