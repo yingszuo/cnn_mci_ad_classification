@@ -223,7 +223,7 @@ def showpercentage(alist):
     print(str(pmci) + " percent of the data has MCI label")
 
 #%%
-    # show class label distribution
+# show class label distribution
 def showp2(alist):
     array = np.unique(alist, return_counts=True)
     pcn = array[1][0]/np.sum(array[1])
