@@ -5,4 +5,4 @@ The functions_preprocessing file contains functions to preprocess MRI images, an
 
 The image preprocessing procedure is detailed in data_preprocessing.py file.
 
-Model trainng and testing using four different methods (in total 16 models) is detailed in four files: models_baseline.py, models_da.py, models_tl.py and models_dr.py. Each file contains training and testing of four differnt models using one method. 
+Model trainng and testing using four different methods (in total 16 models) is detailed in four files: models_baseline.py, models_da.py (data augmentation), models_tl.py (transfer learning) and models_dr.py (dimension reduction). Each file contains training and testing of four differnt models using one method. 
