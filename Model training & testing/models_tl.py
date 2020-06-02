@@ -161,7 +161,7 @@ print(X_train_ms.shape)
 y_train_ms = np.concatenate((y_train, y_val), axis = 0)
 print(y_train_ms.shape)
 
-model, _  = run_genesis(X_train_ms, y_train_ms, final = True)
+model, _  = run_genesis(X_train_ms, y_train_ms, n_epochs = 60, final = True)
 
 
 # evaluate with test set (acc, auc, precision, recall, specificity and f1)
